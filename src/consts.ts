@@ -2,15 +2,15 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 // Site metadata
-export const SITE_TITLE = "Big City Life";
+export const SITE_TITLE = "ROMPPAO";
 export const SITE_DESCRIPTION = "This is a template for an Astro site";
 export const SITE_URL = "https://bigcitylife.netlify.app";
-export const SITE_AUTHOR = "jramma.com";
-export const SITE_EMAIL = "contact@jramma.com";
+export const SITE_AUTHOR = "romppao.com";
+export const SITE_EMAIL = "contact@romppao.com";
 
 // Social media links
 export const SOCIAL_LINKS = {
-  website: "https://jramma.com",
+  website: "https://romppao.com",
 };
 
 // Navigation URLs
