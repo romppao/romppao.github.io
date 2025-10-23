@@ -1,0 +1,1 @@
+const t="romppao.com",e=[{href:"/",text:"Home"},{href:"/about",text:"About me"},{href:"/blog",text:"Blog"},{href:"/collection",text:"Collection"},{href:"/contact",text:"Contact"}];`${new Date().getFullYear()}${t}`;export{e as U};
