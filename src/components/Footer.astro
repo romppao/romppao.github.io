@@ -17,7 +17,7 @@ const toSlugFromId = (id: string) =>
   id.replace(/^.*\//, "").replace(/\.(md|mdx)$/i, "");
 ---
 
-<footer class="relative bg-muted pt-10 w-full md:pb-6 border-t flex flex-col md:flex-row gap-20 z-10 max-w-full overflow-hidden">
+<footer class="relative bg-muted pt-10 w-full md:pb-6 border-t flex flex-col gap-8 z-10 max-w-full overflow-hidden">
   <div class="container px-5 mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="md:w-1/2 flex flex-col items-start gap-6 col-span-1">
       <p class="text-3xl font-semibold font-fugaz">
@@ -26,15 +26,15 @@ const toSlugFromId = (id: string) =>
       <Button href="/contact" text="Let's Chat" />
     </div>
     <div class="md:w-1/2 flex flex-col justify-between md:pr-20 col-span-1">
-      <p>
+      <p class="text-xl font-semibold font-fugaz mb-3">
         LA VIDA A TRAVÉS DE UNA CÁMARA
       </p>
-      <ul class="flex gap-2 md:gap-5">
+      <ul class="flex flex-wrap gap-2 md:gap-4 mb-4">
         {
           collectionEntries.map((collection: any) => (
             <li class="link link-underline link-underline-black text-black pb-1">
               <a
-                class="font-fugaz text-xl md:text-2xl"
+                class="font-fugaz text-lg md:text-xl"
                 href={`/collection/${toSlugFromId(collection.id)}`}
               >
                 {collection.data.title}
@@ -73,48 +73,77 @@ const toSlugFromId = (id: string) =>
       </div>
     </div>
   </div>
-  <div class="w-full border-t border-black flex md:flex-row flex-col md:px-32 px-5 py-4">
-    <div class="md:w-1/2 flex flex-col md:items-start md:flex-row gap-4">
+
+  <div class="w-full border-t border-black flex flex-col md:flex-row md:px-32 px-5 py-6 gap-6">
+    <div class="md:w-1/2 flex flex-col gap-6">
       <ul class="flex gap-4">
         <li>
-          <a href="/blog"
-            ><p class="link link-underline link-underline-black text-black pb-1">
+          <a href="/blog">
+            <p class="link link-underline link-underline-black text-black pb-1">
               Blog
-            </p></a
-          >
+            </p>
+          </a>
         </li>
         <li>
-          <a href="/about"
-            ><p class="link link-underline link-underline-black text-black pb-1">
+          <a href="/about">
+            <p class="link link-underline link-underline-black text-black pb-1">
               About
-            </p></a
-          >
+            </p>
+          </a>
         </li>
       </ul>
-      <ul class="flex flex-col md:flex-row gap-2 md:gap-6">
-        <p>Blog posts</p>
-        <div class="flex flex-wrap gap-1 md:gap-3">
-          {blogCol1.map((entry: any) => (
-            <li class="link link-underline link-underline-black text-black pb-1">
-              <a href={`/blog/${toSlugFromId(entry.id)}`}>
-                {entry.data.title}
+      
+      <div class="flex flex-col gap-4">
+        <p class="text-sm font-semibold text-gray-600">Entradas del Blog:</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+          <ul class="flex flex-col gap-2">
+            {blogCol1.map((entry: any) => (
+              <li class="text-sm">
+                <a 
+                  href={`/blog/${toSlugFromId(entry.id)}`}
+                  class="link link-underline link-underline-black text-black pb-1"
+                >
+                  {entry.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <ul class="flex flex-col gap-2">
+            {blogCol2.map((entry: any) => (
+              <li class="text-sm">
+                <a 
+                  href={`/blog/${toSlugFromId(entry.id)}`}
+                  class="link link-underline link-underline-black text-black pb-1"
+                >
+                  {entry.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      
+      <div class="flex flex-col gap-4">
+        <p class="text-sm font-semibold text-gray-600">Créditos de Fotos - Colección:</p>
+        <ul class="flex flex-col gap-2">
+          {collectionEntries.map((collection: any) => (
+            <li class="text-xs text-gray-600">
+              <a 
+                href={`/collection/${toSlugFromId(collection.id)}`}
+                class="hover:underline"
+              >
+                {collection.data.title}
               </a>
             </li>
           ))}
-        </div>
-        <div class="flex flex-wrap gap-1 md:gap-3">
-          {blogCol2.map((entry: any) => (
-            <li class="link link-underline link-underline-black text-black pb-1">
-              <a href={`/blog/${toSlugFromId(entry.id)}`}>
-                {entry.data.title}
-              </a>
-            </li>
-          ))}
-        </div>
-      </ul>
+        </ul>
+      </div>
     </div>
-    <p class="md:w-1/2 flex md:flex-row md:justify-end md:items-end py-2 md:py-0">
-      {today} &copy; Todos los derechos reservados.
-    </p>
+
+    <div class="md:w-1/2 flex flex-col md:justify-end md:items-end">
+      <p class="text-sm text-gray-600">
+        {today} © Todos los derechos reservados.
+      </p>
+    </div>
   </div>
 </footer>
