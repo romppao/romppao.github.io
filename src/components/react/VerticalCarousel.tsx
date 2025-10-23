@@ -39,17 +39,15 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({
   }, []);
 
   useEffect(() => {
-    // Genera URLs determinísticas desde /public/assets (servido como /assets/*)
-    const MAX_AVAILABLE = 6; // número de archivos cityN.webp disponibles en public/assets
-    const count = Math.min(Math.max(0, imageCount), MAX_AVAILABLE);
-    const prepared: ImageData[] = Array.from({ length: count }, (_, i) => {
-      const index = i + 1;
-      return {
-        src: `/assets/city${index}.webp`,
-        alt: `City artwork ${index}`,
-      };
-    });
-
+    // Define las imágenes en el orden especificado
+    const availableImages = [
+      { src: '/assets/photo_2_2025-10-20_21-32-55.jpg', alt: 'Slider image 1' },
+      { src: '/assets/photo_4_2025-10-20_21-32-55.jpg', alt: 'Slider image 2' },
+      { src: '/assets/photo_1_2025-10-20_21-32-55.jpg', alt: 'Slider image 3' },
+    ];
+    
+    const count = Math.min(Math.max(0, imageCount), availableImages.length);
+    const prepared: ImageData[] = availableImages.slice(0, count);
     setImages(prepared);
   }, [imageCount]);
 
@@ -126,7 +124,7 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({
         className={`h-full flex gap-10 ${isMobile ? 'flex-row items-center' : 'flex-col'}`}
       >
         {images.map(({ src, alt }, index) => (
-          <div key={index} className={`flex flex-grow justify-center ${isMobile ? 'h-full min-w-[100vw]' : 'w-full'}`}>
+          <div key={index} className={`flex justify-center flex-grow ${isMobile ? 'min-w-[90vw]' : ''}`}>
             <img
               src={src}
               alt={alt}
