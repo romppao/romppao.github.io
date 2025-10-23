@@ -18,7 +18,7 @@ export const URLS = [
   { href: "/", text: "Home" },
   { href: "/about", text: "About me" },
   { href: "/blog", text: "Blog" },
-  { href: "/collection", text: "Collection" },
+  { href: "/collection", text: "TRABAJOS" },
   { href: "/contact", text: "Contact" },
 ];
 
