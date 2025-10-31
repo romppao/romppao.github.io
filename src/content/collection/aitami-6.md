@@ -1,6 +1,5 @@
 ---
+heroImage: /Aitami-6.jpg
 title: "Aitami Foto 6"
-description: "Retrato emocional en blanco y negro"
 pubDate: "2025-10-31"
-heroImage: "/Aitami-6.jpg"
 ---
