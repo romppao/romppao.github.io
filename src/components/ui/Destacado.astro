@@ -4,14 +4,6 @@ interface Props {
   post: any;
 }
 const { post } = Astro.props;
-const hero = post?.data?.heroImage as string;
-const basePath = hero || '';
-const widths = [640, 768, 1024, 1280, 1536];
-const quality = 60;
-const srcset = basePath
-  ? widths.map((w) => `${basePath}?nf_resize=fit&w=${w}&q=${quality} ${w}w`).join(', ')
-  : '';
-const sizes = "100vw";
 var margin = "";
 if (post.id === "img2") {
   margin = "!mt-0";
@@ -24,9 +16,20 @@ if (words.length > 2) {
   formattedDescription = `${words[0]} ${words[1]}
 ${words.slice(2).join(' ')}`;
 } else {
-  formattedDescription = description; // Si tiene 2 palabras o menos, no modificamos
+  formattedDescription = description;
 }
 ---
-<a href={`/blog/${post.id}/`}
-  class="flex flex-grow h-[100vh] w-full text-white object-cover relative py-10"
->
+<a class="flex flex-grow h-[100vh] w-full text-white object-cover relative py-10" href={`/blog/${post.id}/`}>
+  {post.data.heroImage && (
+    <img src={post.data.heroImage} alt={post.data.title} class="absolute inset-0 w-full h-full object-cover z-0" />
+  )}
+  <div class="flex flex-col justify-end relative z-10 p-6">
+    <h2 class="font-bold text-4xl mb-2">{post.data.title}</h2>
+    <p class="text-xl" set:html={formattedDescription}></p>
+    <div class="flex items-center mt-4">
+      <FormattedDate date={new Date(post.data.pubDate)} />
+      <span class="w-5 text-5xl -mb-7 ml-2">&dot;</span>
+      4 min read
+    </div>
+  </div>
+</a>
