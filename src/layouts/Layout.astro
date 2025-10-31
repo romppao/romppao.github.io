@@ -17,11 +17,13 @@ import { Icon } from "astro-icon/components";
     <main
       class="container min-h-screen px-2 flex flex-col gap-10 overflow-hidden mx-auto relative"
     >
-      
-      <DeskMenu />
+      <header class="flex justify-between items-center py-4">
+        <a href="/" style="font-size:3em;font-weight:900;text-decoration:none;color:#000;">ROMPPAO</a>
+        <DeskMenu />
+      </header>
       <slot />
+      <Footer />
       <Hamburger client:idle />
     </main>
-    <Footer />
   </body>
 </html>
