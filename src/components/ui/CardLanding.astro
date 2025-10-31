@@ -3,29 +3,11 @@ interface Props {
   post: any;
 }
 const { post } = Astro.props;
-const hero = post?.data?.heroImage as string;
-const basePath = hero || '';
-const widths = [320, 480, 640, 768, 960, 1280, 1920];
-const quality = 80;
-const srcset = basePath
-  ? widths.map((w) => `${basePath}?nf_resize=fit&w=${w}&q=${quality} ${w}w`).join(', ')
-  : '';
-const sizes = "(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 50vw, 640px";
 import FormattedDate from "@/components/FormattedDate.astro";
 ---
-<a href={`/blog/${post.id}/`}
-  class="relative gap-2 grid md:grid-cols-2 items-start"
->
-  {hero && (
-    <img
-      src={`${basePath}?nf_resize=fit&w=640&q=${quality}`}
-      srcset={srcset}
-      sizes={sizes}
-      alt=""
-      class="miniature object-cover "
-      loading="lazy"
-      decoding="async"
-    />
+<a class="relative gap-2 grid md:grid-cols-2 items-start" href={`/blog/${post.id}/`}>
+  {post.data.heroImage && (
+    <img src={post.data.heroImage} alt={post.data.title} class="miniature object-cover" />
   )}
   <div class="flex flex-col col-span-1 md:pr-6">
     <h3 class="font-bold text-2xl">
