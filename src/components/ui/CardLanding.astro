@@ -7,13 +7,13 @@ import FormattedDate from "@/components/FormattedDate.astro";
 ---
 <a class="relative gap-2 grid md:grid-cols-2 items-start" href={`/blog/${post.id}/`}>
   {post.data.heroImage && (
-    <img src={post.data.heroImage} alt={post.data.title} class="miniature object-cover" />
+    <img alt={post.data.title} class="miniature object-cover" src={post.data.heroImage} />
   )}
   <div class="flex flex-col col-span-1 md:pr-6">
     <h3 class="font-bold text-2xl">
     {post.data.title}
     </h3>
-    <p class="font-bold text-xl">{post.data.description}</p>
+    {post.data.description && <p class="font-bold text-xl">{post.data.description}</p>}
     <div class="flex items-center">
       <FormattedDate date={new Date(post.data.pubDate)} />
       <span class="w-5 text-5xl -mb-7 ml-2">&dot;</span>
