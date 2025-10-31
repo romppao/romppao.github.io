@@ -6,7 +6,14 @@ const { post } = Astro.props;
 import FormattedDate from "@/components/FormattedDate.astro";
 ---
 <a class="relative gap-2 grid md:grid-cols-2 items-start" href={`/blog/${post.id}/`}>
-  {post.data.heroImage && (<img src={post.data.heroImage} alt={post.data.title} style="width:100%;height:auto;object-fit:cover;" />)}
+  {post.data.heroImage && (
+  <img
+    src={post.data.heroImage}
+    alt={post.data.title}
+    style="width:100%;height:auto;object-fit:cover;"
+  />
+)}
+
   <div class="flex flex-col col-span-1 md:pr-6">
     <h3 class="font-bold text-2xl">{post.data.title}</h3>
     {post.data.description && <p class="font-bold text-xl">{post.data.description}</p>}
