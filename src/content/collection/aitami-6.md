@@ -1,5 +1,5 @@
 ---
-heroImage: /Aitami 6.jpg
+heroImage: /Aitami_6.jpg
 title: "Aitami Foto 6"
 pubDate: "2025-10-31"
 ---
