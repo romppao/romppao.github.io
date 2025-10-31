@@ -9,7 +9,7 @@ if (post.id === "img2") {
   margin = "!mt-0";
 }
 import FormattedDate from "@/components/FormattedDate.astro";
-const description = post.data.description;
+const description = post.data.description || '';
 const words = description.split(' ');
 let formattedDescription = '';
 if (words.length > 2) {
@@ -21,11 +21,11 @@ ${words.slice(2).join(' ')}`;
 ---
 <a class="flex flex-grow h-[100vh] w-full text-white object-cover relative py-10" href={`/blog/${post.id}/`}>
   {post.data.heroImage && (
-    <img src={post.data.heroImage} alt={post.data.title} class="absolute inset-0 w-full h-full object-cover z-0" />
+    <img alt={post.data.title} class="absolute inset-0 w-full h-full object-cover z-0" src={post.data.heroImage} />
   )}
   <div class="flex flex-col justify-end relative z-10 p-6">
     <h2 class="font-bold text-4xl mb-2">{post.data.title}</h2>
-    <p class="text-xl" set:html={formattedDescription}></p>
+    {formattedDescription && <p class="text-xl" set:html={formattedDescription}></p>}
     <div class="flex items-center mt-4">
       <FormattedDate date={new Date(post.data.pubDate)} />
       <span class="w-5 text-5xl -mb-7 ml-2">&dot;</span>
