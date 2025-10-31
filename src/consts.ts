@@ -1,23 +1,27 @@
 // Place any global data in this file.
 // You can import this data from anywhere in your site by using the `import` keyword.
+
 // Site metadata
 export const SITE_TITLE = "ROMPPAO";
 export const SITE_DESCRIPTION = "This is a template for an Astro site";
 export const SITE_URL = "https://bigcitylife.netlify.app";
 export const SITE_AUTHOR = "romppao.com";
 export const SITE_EMAIL = "contact@romppao.com";
+
 // Social media links
 export const SOCIAL_LINKS = {
   website: "https://romppao.com",
 };
+
 // Navigation URLs
-export const URLS = [
-  { href: "/", text: "HOME" },
-  { href: "/collection", text: "TRABAJOS" },
-  { href: "/about", text: "ABOUT ME" },
-  { href: "/blog", text: "BLOG" },
-  { href: "/contact", text: "CONTACTO" },
-];
+export const URLS = {
+  home: { href: "/", text: "HOME" },
+  trabajos: { href: "/collection", text: "TRABAJOS" },
+  about: { href: "/about", text: "ABOUT ME" },
+  blog: { href: "/blog", text: "BLOG" },
+  contacto: { href: "/contact", text: "CONTACTO" },
+};
+
 // RSS configuration
 export const RSS_CONFIG = {
   title: SITE_TITLE,
@@ -28,11 +32,13 @@ export const RSS_CONFIG = {
   language: "en",
   copyright: `© ${new Date().getFullYear()} ${SITE_AUTHOR}. All rights reserved.`,
 };
+
 // Content collections configuration
 export const COLLECTIONS = {
   blog: "blog",
   collection: "collection",
 } as const;
+
 // Type definitions
 export type Post = {
   title: string;
@@ -43,6 +49,7 @@ export type Post = {
   link: string;
   content: string;
 };
+
 export type CollectionItem = {
   title: string;
   date: Date;
@@ -51,7 +58,9 @@ export type CollectionItem = {
   technique: string;
   location: string;
 };
+
 export type SocialLink = keyof typeof SOCIAL_LINKS;
+
 // Utility functions
 export const formatDate = (date: Date): string => {
   return date.toLocaleDateString("en-US", {
@@ -60,6 +69,7 @@ export const formatDate = (date: Date): string => {
     day: "numeric",
   });
 };
+
 export const getCurrentYear = (): number => {
   return new Date().getFullYear();
 };
