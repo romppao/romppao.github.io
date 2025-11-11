@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotos - VRTT Mario</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #faf9f6;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #d4af37;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #d4af37;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .photo-item {
+            aspect-ratio: 4/3;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .category-filter {
+            background: transparent;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .category-filter:hover,
+        .category-filter.active {
+            background: #d4af37;
+            color: #ffffff;
+        }
+        
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .photo-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .photo-item:hover .photo-info {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200/50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-gray-800">
+                    <a href="index.html">VRTT</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="videos.html" class="nav-link text-gray-700 hover:text-gray-900">VÍDEOS</a>
+                    <a href="fotos.html" class="nav-link text-gray-700 hover:text-gray-900 font-semibold">FOTOS</a>
+                    <a href="index.html#acerca" class="nav-link text-gray-700 hover:text-gray-900">ACERCA DE MÍ</a>
+                    <a href="index.html#contacto" class="nav-link text-gray-700 hover:text-gray-900">CONTACTO</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="pt-24 pb-12 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-5xl font-bold text-gray-800 mb-4">FOTOS</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Explora mi portfolio fotográfico organizado por categorías. Desde deportes hasta retratos, cada imagen cuenta una historia.
+            </p>
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section -->
+    <section class="py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Category Filters -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="category-filter active" data-category="all">Todo</button>
+                <button class="category-filter" data-category="deportes">Deportes</button>
+                <button class="category-filter" data-category="vehiculos">Vehículos</button>
+                <button class="category-filter" data-category="eventos">Eventos</button>
+                <button class="category-filter" data-category="retratos">Retratos</button>
+                <button class="category-filter" data-category="paisajes">Paisajes</button>
+                <button class="category-filter" data-category="arquitectura">Arquitectura</button>
+                <button class="category-filter" data-category="comida">Comida</button>
+            </div>
+            
+            <!-- Photo Grid -->
+            <div class="photo-gallery" id="photo-gallery">
+                <!-- Deportes -->
+                <div class="photo-item" data-category="deportes" data-photo="boxeo-1">
+                    <div class="w-full h-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Boxeo - Entrenamiento</h3>
+                            <p class="text-sm opacity-90">Sesión de entrenamiento en gimnasio</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Boxeo 1</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="deportes" data-photo="fitness-1">
+                    <div class="w-full h-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Fitness - CrossFit</h3>
+                            <p class="text-sm opacity-90">Atleta en competición</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Fitness 1</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="deportes" data-photo="running-1">
+                    <div class="w-full h-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Running - Maratón</h3>
+                            <p class="text-sm opacity-90">Corredor en maratón de Madrid</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Running 1</span>
+                    </div>
+                </div>
+                
+                <!-- Vehículos -->
+                <div class="photo-item" data-category="vehiculos" data-photo="coche-1">
+                    <div class="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">BMW M4 - Sesión</h3>
+                            <p class="text-sm opacity-90">Sesión fotográfica en ciudad</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">BMW M4</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="vehiculos" data-photo="moto-1">
+                    <div class="w-full h-full bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Ducati Panigale</h3>
+                            <p class="text-sm opacity-90">Motocicleta en circuito</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Ducati</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="vehiculos" data-photo="clasico-1">
+                    <div class="w-full h-full bg-gradient-to-br from-yellow-600 to-yellow-800 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Classic Car</h3>
+                            <p class="text-sm opacity-90">Vehículo clásico restaurado</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Clásico</span>
+                    </div>
+                </div>
+                
+                <!-- Eventos -->
+                <div class="photo-item" data-category="eventos" data-photo="concierto-1">
+                    <div class="w-full h-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Concierto Nyno Vargas</h3>
+                            <p class="text-sm opacity-90">Directo en sala madrileña</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Concierto</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="eventos" data-photo="feria-1">
+                    <div class="w-full h-full bg-gradient-to-br from-pink-500 to-pink-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Feria de Muestras</h3>
+                            <p class="text-sm opacity-90">Evento corporativo anual</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Feria</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="eventos" data-photo="boda-1">
+                    <div class="w-full h-full bg-gradient-to-br from-rose-500 to-rose-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Boda Civil</h3>
+                            <p class="text-sm opacity-90">Ceremonia íntima en jardín</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Boda</span>
+                    </div>
+                </div>
+                
+                <!-- Retratos -->
+                <div class="photo-item" data-category="retratos" data-photo="retrato-1">
+                    <div class="w-full h-full bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Retrato Artístico</h3>
+                            <p class="text-sm opacity-90">Sesión en estudio fotográfico</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Retrato 1</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="retratos" data-photo="retrato-2">
+                    <div class="w-full h-full bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Retrato Urbano</h3>
+                            <p class="text-sm opacity-90">Sesión en calles de Madrid</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Retrato 2</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="retratos" data-photo="retrato-3">
+                    <div class="w-full h-full bg-gradient-to-br from-cyan-500 to-cyan-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Retrato Natural</h3>
+                            <p class="text-sm opacity-90">Sesión al aire libre</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Retrato 3</span>
+                    </div>
+                </div>
+                
+                <!-- Paisajes -->
+                <div class="photo-item" data-category="paisajes" data-photo="paisaje-1">
+                    <div class="w-full h-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Sierra de Madrid</h3>
+                            <p class="text-sm opacity-90">Atardecer en la montaña</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Sierra</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="paisajes" data-photo="paisaje-2">
+                    <div class="w-full h-full bg-gradient-to-br from-sky-500 to-sky-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Costa Española</h3>
+                            <p class="text-sm opacity-90">Playa al amanecer</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Costa</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="paisajes" data-photo="paisaje-3">
+                    <div class="w-full h-full bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Campo Castellano</h3>
+                            <p class="text-sm opacity-90">Campos de lavanda</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Campo</span>
+                    </div>
+                </div>
+                
+                <!-- Arquitectura -->
+                <div class="photo-item" data-category="arquitectura" data-photo="arqui-1">
+                    <div class="w-full h-full bg-gradient-to-br from-slate-500 to-slate-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Edificio Modernista</h3>
+                            <p class="text-sm opacity-90">Arquitectura contemporánea</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Modernista</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="arquitectura" data-photo="arqui-2">
+                    <div class="w-full h-full bg-gradient-to-br from-stone-500 to-stone-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Centro Histórico</h3>
+                            <p class="text-sm opacity-90">Arquitectura clásica española</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Clásico</span>
+                    </div>
+                </div>
+                
+                <!-- Comida -->
+                <div class="photo-item" data-category="comida" data-photo="comida-1">
+                    <div class="w-full h-full bg-gradient-to-br from-lime-500 to-lime-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Gastronomía Española</h3>
+                            <p class="text-sm opacity-90">Plato típico mediterráneo</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Gourmet</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="comida" data-photo="comida-2">
+                    <div class="w-full h-full bg-gradient-to-br from-olive-500 to-olive-700 flex items-center justify-center">
+                        <div class="photo-info">
+                            <h3 class="text-lg font-semibold">Café Artesanal</h3>
+                            <p class="text-sm opacity-90">Café de especialidad</p>
+                        </div>
+                        <span class="text-white font-semibold text-2xl">Café</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 px-6 bg-gray-50">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">¿Necesitas fotografía profesional?</h2>
+            <p class="text-xl text-gray-600 mb-8">
+                Estoy disponible para sesiones fotográficas en Madrid y alrededores.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="index.html#contacto" class="bg-gray-800 text-white px-8 py-3 rounded-full hover:bg-gray-700 transition-colors">
+                    Solicitar Sesión
+                </a>
+                <a href="index.html" class="border border-gray-800 text-gray-800 px-8 py-3 rounded-full hover:bg-gray-800 hover:text-white transition-colors">
+                    Volver al inicio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold mb-2">VRTT</h3>
+                <p class="text-gray-400">Filmmaker & Photographer</p>
+            </div>
+            
+            <div class="flex justify-center space-x-8 mb-8">
+                <a href="videos.html" class="text-gray-400 hover:text-white transition-colors">VÍDEOS</a>
+                <a href="fotos.html" class="text-gray-400 hover:text-white transition-colors">FOTOS</a>
+                <a href="index.html#acerca" class="text-gray-400 hover:text-white transition-colors">ACERCA DE MÍ</a>
+                <a href="index.html#contacto" class="text-gray-400 hover:text-white transition-colors">CONTACTO</a>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8">
+                <p class="text-gray-400 text-sm">
+                    © 2024 VRTT Mario Espinoll Gonjar. Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <div class="bg-white p-8 rounded-lg max-w-2xl">
+                <div class="aspect-video bg-gray-200 rounded-lg flex items-center justify-center mb-4">
+                    <span class="text-gray-600">Imagen Ampliada</span>
+                </div>
+                <h3 id="photo-title" class="text-xl font-semibold mb-2">Título de la Foto</h3>
+                <p id="photo-description" class="text-gray-600">Descripción de la fotografía...</p>
+                <div class="mt-4 flex space-x-4">
+                    <button class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
+                        Descargar
+                    </button>
+                    <button class="border border-gray-800 text-gray-800 px-4 py-2 rounded hover:bg-gray-800 hover:text-white transition-colors">
+                        Compartir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Photo filter functionality
+        const categoryFilters = document.querySelectorAll('.category-filter');
+        const photoGallery = document.getElementById('photo-gallery');
+        const photoItems = document.querySelectorAll('.photo-item');
+
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                // Remove active class from all filters
+                categoryFilters.forEach(f => f.classList.remove('active'));
+                // Add active class to clicked filter
+                this.classList.add('active');
+                
+                const category = this.getAttribute('data-category');
+                
+                photoItems.forEach(photo => {
+                    if (category === 'all' || photo.getAttribute('data-category') === category) {
+                        photo.style.display = 'block';
+                        setTimeout(() => {
+                            photo.style.opacity = '1';
+                            photo.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        photo.style.opacity = '0';
+                        photo.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            photo.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Photo modal functionality
+        const photoModal = document.getElementById('photo-modal');
+        const closeModal = document.querySelector('.close-modal');
+        const photoTitle = document.getElementById('photo-title');
+        const photoDescription = document.getElementById('photo-description');
+
+        photoItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const photoId = this.getAttribute('data-photo');
+                const category = this.getAttribute('data-category');
+                
+                photoModal.classList.add('active');
+                photoTitle.textContent = `Foto: ${photoId}`;
+                photoDescription.textContent = `Esta es una fotografía de la categoría ${category}. Aquí se mostraría la descripción completa de la imagen, incluyendo detalles técnicos como cámara, lente, configuración de exposición, y el contexto del momento capturado.`;
+            });
+        });
+
+        closeModal.addEventListener('click', function() {
+            photoModal.classList.remove('active');
+        });
+
+        window.addEventListener('click', function(e) {
+            if (e.target === photoModal) {
+                photoModal.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
