@@ -1,8 +1,8 @@
-# VRTT Mario - Portfolio de Filmmaker y Fotógrafo
+# ROMPAO - Portfolio de Filmmaker y Fotógrafo
 
 ## Descripción
 
-Este es un portfolio profesional replicado de https://vrttportfolio.com para Mario Espinoll Gonjar, un filmmaker y fotógrafo basado en Madrid, España.
+Este es un portfolio profesional diseñado por Daniel Rompao, un filmmaker y fotógrafo basado en Madrid, España.
 
 ## Características del Sitio
 
@@ -90,7 +90,7 @@ Este es un portfolio profesional replicado de https://vrttportfolio.com para Mar
 ## Características Específicas
 
 ### Sección de Videos
-- Organización por categorías (Publicidad, Eventos, Fashion, Deportes)
+- Organización por categorías (Publicidad, Eventos, Videoclips, Deportes)
 - Modal de video con reproductor
 - Diseño de cards con efectos hover
 
@@ -120,11 +120,10 @@ Este es un portfolio profesional replicado de https://vrttportfolio.com para Mar
 
 ## Créditos
 
-- Basado en el diseño de https://vrttportfolio.com
 - Tipografía: Inter de Google Fonts
 - Framework CSS: Tailwind CSS
 - Iconos: SVG personalizados
 
 ---
 
-**© 2024 VRTT Mario Espinoll Gonjar - Todos los derechos reservados**
+**© 2025 ROMPAO - Todos los derechos reservados**
