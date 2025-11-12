@@ -367,23 +367,22 @@
     <!-- Photo Modal -->
     <div id="photo-modal" class="modal">
         <span class="close-modal">&times;</span>
-        <div class="modal-content">
-            <div class="bg-white p-8 rounded-lg max-w-2xl">
-<img id="modal-image" src="" alt="Foto ampliada" class="w-full rounded-lg mb-4">
-                                    <h3 id="photo-title" class="text-xl font-semibold mb-2">Título de la Foto</h3>
-                <p id="photo-description" class="text-gray-600">Descripción de la fotografía...</p>
-                <div class="mt-4 flex space-x-4">
-                    <button class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
+        <div class="modal-content" style="max-width: 90vw; max-height: 90vh; display: flex; flex-direction: column; align-items: center;">
+            <img id="modal-image" src="" alt="Foto ampliada" style="max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: 8px; margin-bottom: 20px;">
+            <div style="background: white; padding: 20px; border-radius: 8px; width: 100%; max-width: 600px;">
+                <h3 id="photo-title" class="text-xl font-semibold mb-2" style="color: #1a1a1a;">Título de la Foto</h3>
+                <p id="photo-description" class="text-gray-600 mb-4">Descripción de la fotografía...</p>
+                <div class="flex gap-4">
+                    <button class="bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-700 transition-colors">
                         Descargar
                     </button>
-                    <button class="border border-gray-800 text-gray-800 px-4 py-2 rounded hover:bg-gray-800 hover:text-white transition-colors">
+                    <button class="border border-gray-800 text-gray-800 px-6 py-2 rounded hover:bg-gray-800 hover:text-white transition-colors">
                         Compartir
                     </button>
                 </div>
             </div>
         </div>
     </div>
-
     <script>
         // Photo filter functionality
         const categoryFilters = document.querySelectorAll('.category-filter');
