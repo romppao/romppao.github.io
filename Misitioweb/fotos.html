@@ -365,24 +365,23 @@
     </footer>
 
     <!-- Photo Modal -->
-    <div id="photo-modal" class="modal">
+<div id="photo-modal" class="modal">
         <span class="close-modal">&times;</span>
-        <div class="modal-content" style="max-width: 90vw; max-height: 90vh; display: flex; flex-direction: column; align-items: center;">
-            <img id="modal-image" src="" alt="Foto ampliada" style="max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: 8px; margin-bottom: 20px;">
-            <div style="background: white; padding: 20px; border-radius: 8px; width: 100%; max-width: 600px;">
-                <h3 id="photo-title" class="text-xl font-semibold mb-2" style="color: #1a1a1a;">Título de la Foto</h3>
-                <p id="photo-description" class="text-gray-600 mb-4">Descripción de la fotografía...</p>
-                <div class="flex gap-4">
-                    <button class="bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-700 transition-colors">
+        <div class="modal-content" style="max-width: 85vw; max-height: 90vh; display: flex; flex-direction: column; align-items: center; background: transparent; padding: 0; border: none;">
+            <img id="modal-image" src="" alt="Foto ampliada" style="max-width: 100%; max-height: 75vh; width: auto; height: auto; object-fit: contain; display: block; margin-bottom: 15px;">
+            <div style="background: white; padding: 20px 30px; border-radius: 8px; width: 100%; max-width: 700px;">
+                <h3 id="photo-title" class="text-xl font-semibold mb-2" style="color: #1a1a1a; margin-bottom: 8px;">Título de la foto</h3>
+                <p id="photo-description" class="text-gray-600 mb-4" style="color: #666; margin-bottom: 16px;">Descripción de la fotografía...</p>
+                <div style="display: flex; gap: 12px; justify-content: flex-start;">
+                    <button class="bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-700 transition-colors" style="background: #2d3748; color: white; padding: 8px 24px; border-radius: 6px; border: none; cursor: pointer; font-size: 14px;" onmouseover="this.style.background='#1a202c'" onmouseout="this.style.background='#2d3748'">
                         Descargar
                     </button>
-                    <button class="border border-gray-800 text-gray-800 px-6 py-2 rounded hover:bg-gray-800 hover:text-white transition-colors">
+                    <button class="border border-gray-800 text-gray-800 px-6 py-2 rounded hover:bg-gray-800 hover:text-white transition-colors" style="background: white; color: #2d3748; padding: 8px 24px; border-radius: 6px; border: 2px solid #2d3748; cursor: pointer; font-size: 14px;" onmouseover="this.style.background='#2d3748'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#2d3748'">
                         Compartir
                     </button>
                 </div>
             </div>
         </div>
-    </div>
     <script>
         // Photo filter functionality
         const categoryFilters = document.querySelectorAll('.category-filter');
