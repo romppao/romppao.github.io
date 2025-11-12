@@ -369,10 +369,7 @@
         <span class="close-modal">&times;</span>
         <div class="modal-content">
             <div class="bg-white p-8 rounded-lg max-w-2xl">
-                <div class="aspect-video bg-gray-200 rounded-lg flex items-center justify-center mb-4">
-                    <span class="text-gray-600">Imagen Ampliada</span>
-                </div>
-                <h3 id="photo-title" class="text-xl font-semibold mb-2">Título de la Foto</h3>
+                <div class="aspect-video bg-gray-200 rounded-lg flex items-center justify-center mb-4"><img id="modal-image" src="" alt="Foto ampliada" class="w-full rounded-lg mb-4">
                 <p id="photo-description" class="text-gray-600">Descripción de la fotografía...</p>
                 <div class="mt-4 flex space-x-4">
                     <button class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
@@ -424,6 +421,7 @@
         const closeModal = document.querySelector('.close-modal');
         const photoTitle = document.getElementById('photo-title');
         const photoDescription = document.getElementById('photo-description');
+                const modalImage = document.getElementById('modal-image');
 
         photoItems.forEach(item => {
             item.addEventListener('click', function() {
@@ -431,6 +429,13 @@
                 const category = this.getAttribute('data-category');
                 
                 photoModal.classList.add('active');
+                            
+            // Obtener la imagen del item clickeado
+            const imgElement = this.querySelector('img');
+            if (imgElement) {
+                modalImage.src = imgElement.src;
+                modalImage.alt = imgElement.alt;
+            }
                 photoTitle.textContent = `Foto: ${photoId}`;
                 photoDescription.textContent = `Esta es una fotografía de la categoría ${category}. Aquí se mostraría la descripción completa de la imagen, incluyendo detalles técnicos como cámara, lente, configuración de exposición, y el contexto del momento capturado.`;
             });
